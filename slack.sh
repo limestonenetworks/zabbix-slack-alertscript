@@ -1,5 +1,11 @@
 #!/bin/bash
 
+export SCRIPT_PATH=$(dirname $(readlink -f "$0"))
+
+if [[ -f "${SCRIPT_PATH}/slack.env" ]]; then
+    . "${SCRIPT_PATH}/slack.env"
+fi
+
 # Slack incoming web-hook URL and user name
 url='CHANGEME'		# example: https://hooks.slack.com/services/QW3R7Y/D34DC0D3/BCADFGabcDEF123
 username='Zabbix'
@@ -31,4 +37,4 @@ message="${subject}: $3"
 
 # Build our JSON payload and send it as a POST request to the Slack incoming web-hook URL
 payload="payload={\"channel\": \"${to//\"/\\\"}\", \"username\": \"${username//\"/\\\"}\", \"attachments\": [{\"color\": \"${color}\", \"text\": \"${message//\"/\\\"}\"}]}"
-curl -m 5 --data-urlencode "${payload}" $url -A 'zabbix-slack-alertscript / https://github.com/ericoc/zabbix-slack-alertscript'
+curl -m 5 --data-urlencode "${payload}" ${SLACK_WEBHOOK_URL:-$url} -A 'zabbix-slack-alertscript / https://github.com/ericoc/zabbix-slack-alertscript'

@@ -45,12 +45,22 @@ An incoming web-hook integration must be created within your Slack.com account w
 Given the above screenshot, the incoming web-hook URL would be:
 
 	https://hooks.slack.com/services/QW3R7Y/D34DC0D3/BCADFGabcDEF123
-	
+
 Make sure that you specify your correct Slack.com incoming web-hook URL and feel free to edit the sender user name at the top of the script:
 
 	# Slack incoming web-hook URL and user name
 	url='https://hooks.slack.com/services/QW3R7Y/D34DC0D3/BCADFGabcDEF123'
 	username='Zabbix'
+
+The Slack webhook URL can also be set in a separate environment file alongside
+the slack.sh alertscript, in a file named `slack.env`.
+
+	# Slack incoming web-hook URL and user name
+	export SLACK_WEBHOOK_URL='https://hooks.slack.com/services/QW3R7Y/D34DC0D3/BCADFGabcDEF123'
+
+When the environment file is used to pass the slack webhook URL, you do not need
+to modify the URL in the alertscript itself. The env file will always take
+precedence.
 
 
 ### Within the Zabbix web interface
