@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Load /etc/environment in case proxy settings are needed
+while read -r env; do export "$env"; done < <(cat /etc/environment)
+
 export SCRIPT_PATH=$(dirname $(readlink -f "$0"))
 
 if [[ -f "${SCRIPT_PATH}/slack.env" ]]; then
